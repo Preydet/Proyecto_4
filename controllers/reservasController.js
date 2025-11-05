@@ -46,8 +46,58 @@ if (!nuevaReserva.hotel || !nuevaReserva.tipo_habitacion || !nuevaReserva.num_hu
     }
 }
 
+//Actualizar una reserva existente
+const updateReserva = async (req, res) => {
+    try {
+        const data = await fs.readFile(reservasPath, 'utf8' );
+        const reservas = JSON.parse(data) || [];
+
+        const reservaId = parseInt(req.params.id);
+        const index = reservas.findIndex(r => r.id === reservaId);
+        if (index === -1) {
+            return res.status(404).json({ error: 'Reserva no encontrada' });
+        }
+        // Actualizar los campos de la reserva
+        reservas[index] = {
+            ...reservas[index],
+            ...req.body
+        };
+        await fs.writeFile(reservasPath, JSON.stringify(reservas, null, 2));
+
+        res.status(200).json(reservas[index]);
+    } catch (err) {
+        console.error('Error al actualizar la reserva:', err);
+        res.status(500).json({ error: 'Error al actualizar la reserva' });     
+    }
+}
+
+//Eliminar una reserva existente
+const deleteReserva = async (req, res) => {
+    try {
+        const data = await fs.readFile(reservasPath, 'utf8' );
+        const reservas = JSON.parse(data) || [];
+        const reservaId = parseInt(req.params.id);
+        const index = reservas.findIndex(r => r.id === reservaId);
+
+        if (index === -1) {
+            return res.status(404).json({ error: 'Reserva no encontrada' });
+        }
+
+        // Eliminar la reserva
+        const [reservaEliminada] = reservas.splice(index, 1);
+        await fs.writeFile(reservasPath, JSON.stringify(reservas, null, 2));
+
+        res.status(200).json({ message: 'Reserva eliminada', reserva: reservaEliminada });
+    } catch (err) {
+        console.error('Error al eliminar la reserva:', err);
+        res.status(500).json({ error: 'Error al eliminar la reserva' });     
+    }
+};
+
     module.exports = {
         getReservas,
-        createReserva
+        createReserva,
+        updateReserva,
+        deleteReserva
     };
 
