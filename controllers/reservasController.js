@@ -1,5 +1,6 @@
 const fs = require('fs').promises;
 const path = require('path');
+const booking = require('../models/model');
 
 // Ruta al archivo JSON
 const reservasPath = path.join(__dirname, '../reservas.json');
@@ -22,20 +23,23 @@ const createReserva = async(req, res) => {
         const data = await fs.readFile(reservasPath, 'utf8');
         const reservas = JSON.parse(data) || [];
 
-        const nuevaReserva = {
-            id: reservas.length ? reservas[reservas.length - 1].id + 1 : 1,
-            hotel: req.body.hotel,
-            tipo_habitacion: req.body.tipo_habitacion,
-            num_huespedes: req.body.num_huespedes,
-            fecha_inicio: req.body.fecha_inicio,
-            fecha_fin: req.body.fecha_fin,
-            estado: req.body.estado || 'pendiente'
-        };
+        const { hotel, tipo_habitacion, num_huespedes, fecha_inicio, fecha_fin, estado } = req.body;
 
 //Validar campos obligatorios
-if (!nuevaReserva.hotel || !nuevaReserva.tipo_habitacion || !nuevaReserva.num_huespedes || !nuevaReserva.fecha_inicio || !nuevaReserva.fecha_fin) {
+if (!hotel || !tipo_habitacion || !num_huespedes || !fecha_inicio || !fecha_fin) {
     return res.status(400).json({ error: 'Faltan campos obligatorios' });
 }
+// Cear una nueva isntancia de Booking
+        const nuevaReserva = new booking(
+            reservas.length ? reservas[reservas.length - 1].id + 1 : 1, 
+            hotel,
+            tipo_habitacion,
+            num_huespedes,
+            fecha_inicio,
+            fecha_fin,
+            estado || 'pendiente'
+        ); 
+
         reservas.push(nuevaReserva);
         await fs.writeFile(reservasPath, JSON.stringify(reservas, null, 2));
 

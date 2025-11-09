@@ -34,5 +34,14 @@
     "fecha_inicio": "2023-08-05",
     "fecha_fin": "2023-08-10",
     "estado": "cancelada"
+  },
+  {
+    "id": 5,
+    "hotel": "Hotel Luna",
+    "tipo_habitacion": "Suite",
+    "num_huespedes": 2,
+    "fecha_inicio": "2025-11-20",
+    "fecha_fin": "2025-11-25",
+    "estado": "pendiente"
   }
 ]
