@@ -1,6 +1,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 const booking = require('../models/model');
+const { v4: uuidv4 } = require('uuid');
 
 // Ruta al archivo JSON
 const reservasPath = path.join(__dirname, '../reservas.json');
@@ -31,7 +32,7 @@ if (!hotel || !tipo_habitacion || !num_huespedes || !fecha_inicio || !fecha_fin)
 }
 // Cear una nueva isntancia de Booking
         const nuevaReserva = new booking(
-            reservas.length ? reservas[reservas.length - 1].id + 1 : 1, 
+            uuidv4(), // Generar un ID único
             hotel,
             tipo_habitacion,
             num_huespedes,
@@ -56,7 +57,7 @@ const updateReserva = async (req, res) => {
         const data = await fs.readFile(reservasPath, 'utf8' );
         const reservas = JSON.parse(data) || [];
 
-        const reservaId = parseInt(req.params.id);
+        const reservaId = req.params.id
         const index = reservas.findIndex(r => r.id === reservaId);
         if (index === -1) {
             return res.status(404).json({ error: 'Reserva no encontrada' });
@@ -80,7 +81,7 @@ const deleteReserva = async (req, res) => {
     try {
         const data = await fs.readFile(reservasPath, 'utf8' );
         const reservas = JSON.parse(data) || [];
-        const reservaId = parseInt(req.params.id);
+        const reservaId = req.params.id;
         const index = reservas.findIndex(r => r.id === reservaId);
 
         if (index === -1) {

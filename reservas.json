@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": "550e8400-e29b-41d4-a716-446655440000",
     "hotel": "Hotel Paraíso",
     "tipo_habitacion": "Doble",
     "num_huespedes": 3,
@@ -9,7 +9,7 @@
     "estado": "confirmada"
   },
   {
-    "id": 2,
+    "id": "6fa459ea-ee8a-3ca4-894e-db77e160355e",
     "hotel": "Hotel Paraíso",
     "tipo_habitacion": "Suite Familiar",
     "num_huespedes": 4,
@@ -18,7 +18,7 @@
     "estado": "pendiente"
   },
   {
-    "id": 3,
+    "id": "123e4567-e89b-12d3-a456-426614174000",
     "hotel": "Hotel Sol",
     "tipo_habitacion": "Suite de Lujo",
     "num_huespedes": 2,
@@ -27,21 +27,12 @@
     "estado": "confirmada"
   },
   {
-    "id": 4,
+    "id": "987f1234-e89b-12d3-a456-426655440000",
     "hotel": "Hotel Paraíso",
     "tipo_habitacion": "Doble",
     "num_huespedes": 1,
     "fecha_inicio": "2023-08-05",
     "fecha_fin": "2023-08-10",
     "estado": "cancelada"
-  },
-  {
-    "id": 5,
-    "hotel": "Hotel Luna",
-    "tipo_habitacion": "Suite",
-    "num_huespedes": 2,
-    "fecha_inicio": "2025-11-20",
-    "fecha_fin": "2025-11-25",
-    "estado": "pendiente"
   }
 ]
