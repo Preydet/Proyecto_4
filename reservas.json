@@ -34,5 +34,23 @@
     "fecha_inicio": "2023-08-05",
     "fecha_fin": "2023-08-10",
     "estado": "cancelada"
+  },
+  {
+    "id": "22372390-0e44-40b4-8b8a-154f0d526514",
+    "hotel": "Hotel PLaza",
+    "tipo_habitacion": "Simple",
+    "num_huespedes": 1,
+    "fecha_inicio": "2025-07-20",
+    "fecha_fin": "2025-07-25",
+    "estado": "pendiente"
+  },
+  {
+    "id": "c83abc3b-f366-4e9e-b050-538369e45472",
+    "hotel": "Hotel PLaza",
+    "tipo_habitacion": "Doble",
+    "num_huespedes": 2,
+    "fecha_inicio": "2025-08-4",
+    "fecha_fin": "2025-08-16",
+    "estado": "confirmada"
   }
 ]
