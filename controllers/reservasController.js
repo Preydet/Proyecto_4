@@ -10,7 +10,36 @@ const reservasPath = path.join(__dirname, '../reservas.json');
 const getReservas = async(req, res) => {
     try {
         const data = await fs.readFile(reservasPath, 'utf8');
-        const reservas = JSON.parse(data) || [];
+        let reservas = JSON.parse(data) || [];
+
+// Posibles Filtros desde query string
+        const { hotel, fecha_inicio, fecha_fin, tipo_habitacion, estado, num_huespedes } = req.query;
+
+        // Filtro por hotel
+        if (hotel) {
+            reservas = reservas.filter(r => r.hotel.toLowerCase().includes(hotel.toLowerCase()));
+        }
+
+        // Filtro por habitacion
+        if (tipo_habitacion) {
+            reservas = reservas.filter(r => r.tipo_habitacion.toLowerCase().includes(tipo_habitacion.toLowerCase()));
+        }
+
+        // Filtro por estado
+        if (estado) {
+            reservas = reservas.filter(r => r.estado.toLowerCase().includes(estado.toLowerCase()));
+        }
+        // Filtro por numero de huespedes
+        if (num_huespedes) {
+            reservas = reservas.filter(r => Number(r.num_huespedes) === Number(num_huespedes));
+        }
+        // Filtro por fecha
+        if (fecha_inicio && fecha_fin) {
+            reservas = reservas.filter(r => 
+                r.fecha_inicio >= fecha_inicio && r.fecha_fin <= fecha_fin
+            );
+        }
+
         res.status(200).json(reservas);
     } catch (err) {
         console.error('Error al leer las reservas:', err);
