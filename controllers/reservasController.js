@@ -2,8 +2,6 @@ const fs = require('fs').promises;
 const path = require('path');
 const booking = require('../models/model');
 const { v4: uuidv4 } = require('uuid');
-const { json } = require('stream/consumers');
-const { get } = require('http');
 
 // Ruta al archivo JSON
 const reservasPath = path.join(__dirname, '../reservas.json');
@@ -12,7 +10,7 @@ const reservasPath = path.join(__dirname, '../reservas.json');
 const getReservas = async(req, res) => {
     try {
         const data = await fs.readFile(reservasPath, 'utf8');
-        let reservas = json.parse(data) || [];
+        let reservas = JSON.parse(data) || [];
 
 // Posibles Filtros desde query string
         const { hotel, fecha_inicio, fecha_fin, tipo_habitacion, estado, num_huespedes } = req.query;
