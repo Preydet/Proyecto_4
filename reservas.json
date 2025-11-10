@@ -51,6 +51,15 @@
     "num_huespedes": 2,
     "fecha_inicio": "2025-08-4",
     "fecha_fin": "2025-08-16",
+    "estado": "pendiente"
+  },
+  {
+    "id": "410a027c-e48a-44e2-935f-5572d4f07ecb",
+    "hotel": "Hotel PLaza",
+    "tipo_habitacion": "Simple",
+    "num_huespedes": 1,
+    "fecha_inicio": "2025-08-4",
+    "fecha_fin": "2025-08-16",
     "estado": "confirmada"
   }
 ]

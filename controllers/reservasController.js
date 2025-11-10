@@ -2,6 +2,8 @@ const fs = require('fs').promises;
 const path = require('path');
 const booking = require('../models/model');
 const { v4: uuidv4 } = require('uuid');
+const { json } = require('stream/consumers');
+const { get } = require('http');
 
 // Ruta al archivo JSON
 const reservasPath = path.join(__dirname, '../reservas.json');
@@ -10,7 +12,7 @@ const reservasPath = path.join(__dirname, '../reservas.json');
 const getReservas = async(req, res) => {
     try {
         const data = await fs.readFile(reservasPath, 'utf8');
-        let reservas = JSON.parse(data) || [];
+        let reservas = json.parse(data) || [];
 
 // Posibles Filtros desde query string
         const { hotel, fecha_inicio, fecha_fin, tipo_habitacion, estado, num_huespedes } = req.query;
@@ -44,7 +46,27 @@ const getReservas = async(req, res) => {
     } catch (err) {
         console.error('Error al leer las reservas:', err);
         res.status(500).json({ error: 'Error al leer las reservas' });
-    }  
+    } 
+};
+    
+// Función GET ID
+
+const getReservaById = async (req, res) => {
+    try {
+        const data = await fs.readFile(reservasPath, 'utf8');
+        const reservas = JSON.parse(data) || [];
+        const reservaId = req.params.id.trim();// evita espacios en blanco
+        const reserva = reservas.find(r => r.id === reservaId);
+
+        if (!reserva) {
+            return res.status(404).json({ error: 'Reserva no encontrada' });
+        }
+        res.status(200).json(reserva);
+    } catch (err) {
+        console.error('Error al leer la reserva:', err);
+        res.status(500).json({ error: 'Error al leer la reserva' });
+    }   
+
 };
 
 // Crear una nueva reserva
@@ -129,6 +151,7 @@ const deleteReserva = async (req, res) => {
 };
     module.exports = {
         getReservas,
+        getReservaById,
         createReserva,
         updateReserva,
         deleteReserva
